@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.css">
+    <style>
+    *{
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+    .innerbox{
+        display: flex;
+        justify-content: space-between
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+     <outer>
+         <ul>
+             <list v-for='(item,index) in mlist'
+                :key='item.name'
+                :name='item.name'
+                :price='item.price'
+                :totalprice='item.totalPrice'
+                @ace-remove='deleteFn'
+               
+                >
+                <numbtn  @ace-sub='subFn'
+                @ace-plus='plusFn'
+                ></numbtn>
+            </list> 
+         </ul>
+       
+
+     </outer>
+
+    </div>
+</body>
+<script>
+    var numbtn={
+        data(){
+            return{
+                num:1
+            }
+        },
+        methods:{
+            subFn(){
+            if(this.num>1){
+                this.num--
+            }
+            var num =this.num
+            var that=this.$parent.name
+            this.$emit('ace-sub',{num,that})
+
+            },
+            plusFn(){
+                this.num++
+               var num =this.num
+               var that=this.$parent.name
+                this.$emit('ace-plus',{num,that})
+            }
+        },
+        template:`
+        <div>
+        <button @click='subFn'> - </button>
+        {{num}}
+        <button @click='plusFn'> + </button>
+        </div>
+        `
+    }
+    var list={
+        methods:{
+            deleteFn(){
+              var name=this.name
+              this.$emit('ace-remove',{name});
+            },
+            
+        },
+        props:['name','price','totalprice'],
+        template:`
+         <li  class='innerbox'>
+            {{name}}  <div>{{price}}</div>
+           <slot></slot>
+           <div>{{totalprice}}</div>
+           <button @click='deleteFn'>删除</button>
+        
+         </li>
+        
+        `,
+        components:{
+            numbtn
+        }
+    }
+    var outer={
+        
+        template:`
+         <div>
+            <slot></slot>
+            <p>总金额：{{this.$parent.totalMoney}}</p>
+         </div>
+        `
+    } 
+    var app=new Vue({
+        el:'#app',
+        data:{
+            totalMoney:870,
+            mlist:[{
+                name:'苹果手机',
+                price:300,
+                totalPrice:300,
+            },{
+                name:'华为手机',
+                price:250,
+                totalPrice:250,
+            },{
+                name:'小米手机',
+                price:200,
+                totalPrice:200,
+            },{
+                name:'三星手机',
+                price:120,
+                totalPrice:120,
+            }]
+        },
+        methods:{
+            deleteFn({ name }) {
+                this.mlist = this.mlist.filter((item) => {
+                    return item.name != name
+                })
+                var all=0
+                this.mlist.forEach(item => {
+                    all+= item.totalPrice  
+                });
+                this.totalMoney=all
+
+            },
+            subFn({ num,that }) {
+                var list = this.mlist.filter((item) => {
+                    return item.name == that
+                })
+                list[0].totalPrice=num*list[0].price
+                var all=0
+                this.mlist.forEach(item => {
+                    all+= item.totalPrice  
+                });
+                this.totalMoney=all
+            },
+            plusFn({ num ,that}) {
+                var list = this.mlist.filter((item) => {
+                    return item.name == that
+                })
+                list[0].totalPrice=num*list[0].price
+                var all=0
+                this.mlist.forEach(item => {
+                    all+= item.totalPrice  
+                });
+                this.totalMoney=all
+            }
+
+        },
+        components:{
+        outer,
+        list,
+        numbtn
+        }
+    })
+</script>
+</html>
