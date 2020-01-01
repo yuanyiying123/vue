@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.css">
+    <style>
+    *{
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+    .col{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .btn{
+        font-size: 12px;
+        background-color: lightblue;
+        color:blue;
+    }
+    button{
+        font-size: 12px;
+    }
+    input{
+        width:100px;
+    }
+    .btnBox{
+        float:left;
+        width:400px;
+    }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <inp v-for='(item,index) in mlist'
+        :key='item.name'
+        :name='item.name'
+        :size='item.size'
+        :id='item.id'
+        @ace-remove='removeFn'
+        @ace-add='addFn'
+        ></inp>
+           
+    </div>
+</body>
+<script>
+    var sizeBtn={
+        props:['msg'],
+        template:`
+           <button class='btn'
+           @click='removeitem'>{{msg}}  x</button>
+        
+        `,
+        methods:{
+            removeitem(){
+              var msg=this.msg
+              var size=this.$parent.size
+              this.$emit('ace-out',{msg,size})
+            }
+        }
+       
+    }
+    var inp={
+        data(){
+            return{
+                newtype:''
+            }
+        },
+        props:[
+            'name',
+            'size',
+            'id'
+        ],
+        methods:{
+            removeFn(){
+                var id=this.id
+                this.$emit('ace-remove',{id})
+            },
+            addFn(){
+                var id=this.id
+                var newtype=this.newtype
+                this.$emit('ace-add',{id,newtype})
+                this.newtype=''
+            },
+            getmsg() {
+                var name = this.name
+                var size = this.size
+            }, 
+            removeitem({ msg,size }) {
+                console.log(msg,size)
+                var a=size.indexOf(msg)
+                size.splice(a,1)
+            }
+        },
+        template:`
+        <li class='col'>
+          <input type='text' :placeholder=this.name v-model='newtype'>
+          <slot>
+          <div class='btnBox'>
+          <sizebtn v-for='(item,index) in this.size'
+          :msg='item'
+          :key='index'
+          @ace-out='removeitem'
+           ></sizebtn>
+           </div>
+          </slot>
+          <button @click='addFn'>添加新规格</button>
+          
+          <button @click='removeFn' >删除</button>
+          
+        </li>
+        
+        `,
+        components:{
+            sizebtn:sizeBtn,
+        }
+    }
+    var app=new Vue({
+       el:'#app',
+       data:{
+          mlist:[{
+              name:'内存容量',
+              size:['64GB','128GB'],
+              id:'1'
+          },{
+              name:'尺寸',
+              size:['4英寸','4.5英寸','5英寸'],
+              id:'2'
+          },{
+              name:'产品外观',
+              size:['磨砂色','星空灰'],
+              id:'3'
+          }]
+       },
+       methods:{
+        removeFn({id}){
+            this.mlist=this.mlist.filter((item)=>{
+                return item.id!=id
+            })
+             
+        },
+        addFn({id,newtype}){
+           var aa= this.mlist.filter((item)=>{
+                return item.id==id
+            })
+            aa[0].size.push(newtype)
+        }
+       },
+       components:{
+        inp,
+        sizebtn:sizeBtn,
+       }
+   })
+
+
+</script>
+</html>
