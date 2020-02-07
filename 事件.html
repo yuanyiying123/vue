@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    
+     <div id="app">
+         <button @click.stop="handleCount('add',$event)">ADD</button>
+           <span>{{count}}</span>
+         <button @click.once="handleCount('sub',$event)">SUB</button>
+         <input v-on:keyup.38="submit">
+     </div>
+</body>
+
+<script>
+        //  var app = new Vue({
+        //         el:"#app",
+        //         data:{                  
+        //             count:1
+        //         },
+        //         methods: {
+        //             handleCount(type,event){
+        //                 if(type=="add"){
+        //                     this.count += 1; 
+        //                 }else{
+        //                     this.count -= 1; 
+        //                 }                
+        //             },
+        //             handleSub(){
+        //                 this.count -= 1; 
+        //             }
+        //         },
+                
+        // })
+        
+
+        //    var app = new Vue({
+        //         el:"#app",
+        //         data:{                  
+        //             count:1
+        //         },
+        //         methods: {
+        //             handleCount(type,event){
+        //                 if(type=="add"){
+        //                     this.count += 1; 
+        //                 }else{
+        //                     this.count -= 1; 
+        //                 }                
+        //             },
+        //             handleSub(){
+        //                 this.count -= 1; 
+        //             }
+        //         },
+                
+        // })
+
+
+
+        //  var app = new Vue({
+        //         el:"#app",
+        //         data:{                  
+        //             count:1
+        //         },
+        //         methods: {
+        //             handleCount(type,event){
+        //                 if(type=="add"){
+        //                     this.count += 1; 
+        //                 }else{
+        //                     this.count -= 1; 
+        //                 }                
+        //             },
+        //             handleSub(){
+        //                 this.count -= 1; 
+        //             }
+        //         },        
+        // })
+
+
+        
+        
+
+</script>
+</html>

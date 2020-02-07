@@ -1,0 +1,98 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">           
+           <p v-if="seen">看的见我不？</p>
+            
+            <p v-if="like=='cat'">猫</p>
+            <p v-else-if="like=='pig'">猪</p>
+            <p v-else>狗</p>
+            <template v-if="want">
+               <p>name:花花</p>
+               <p>age:18</p>
+            </template>
+            <template v-else>
+                    <p>name:悠悠</p>
+                    <p>age:19</p>
+            </template>
+            <hr>
+
+
+
+            <template v-if="loginType=='phone'">
+                 <input type="text" placeholder="电话" key="phone">
+                 <button>登录</button>
+            </template>
+
+
+            
+            <template v-else>
+                <input type="text" placeholder="用户名" kye="username">
+                <button>登录</button>
+            </template>
+            <button @click="handleChange">切换</button>
+            <p v-show="show">在不在？</p>
+    </div>
+</body>
+<script>
+        //  var app = new Vue({               
+        //          el:"#app",
+        //          data:{
+        //             seen:true,
+        //             like:'pig',
+        //             want:true,
+        //             loginType:'phone',
+        //             show:true
+        //          },
+        //          methods: {
+        //             handleChange(){
+        //                this.loginType = this.loginType == 'phone'?"":"phone"
+        //             }
+        //          },
+
+        //  })
+
+
+        // var app = new Vue({               
+        //          el:"#app",
+        //          data:{
+        //             seen:true,
+        //             like:'pig',
+        //             want:true,
+        //             loginType:'phone',
+        //             show:true
+        //          },
+        //          methods: {
+        //             handleChange(){
+        //                this.loginType = this.loginType == 'phone'?"":"phone"
+        //             }
+        //          },
+
+        //  })
+
+
+         var app = new Vue({               
+                 el:"#app",
+                 data:{
+                    seen:true,
+                    like:'pig',
+                    want:true,
+                    loginType:'phone',
+                    show:true
+                 },
+                 methods: {
+                    handleChange(){
+                       this.loginType = this.loginType == 'phone'?"":"phone"
+                    }
+                 },
+
+         })
+
+</script>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id='app'>
+        <input type="text" v-model='msg'>
+        <button v-if='!isEdit' @click='addBtn'>添加</button>
+        <button v-else @click='sureBtn'>确定</button>
+         <ul>
+             <li v-for='(item,index) of list' :key='index'>{{item}} <button @click='remove(index)'>删除</button> <button @click='write(index)'>编辑</button></li>
+         </ul>
+    </div>
+    
+</body>
+<script>
+     var app=new Vue({
+         el:'#app',
+         data:{
+             msg:'',
+             list:[],
+             isEdit:false
+         },
+        
+         methods:{
+            addBtn: function(){
+                this.list.push(this.msg)
+                this.msg=''
+            },
+            remove:function(key){
+                this.list.splice(key,1)
+            },
+            write:function(key){
+                  this.msg=this.list[key]
+                  
+                  this.isEdit=true
+            },
+            sureBtn: function(key){
+                this.list.splice(key,1,this.msg)
+            }
+         }
+     })
+</script>
+</html>

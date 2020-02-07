@@ -1,0 +1,98 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+          
+        <ul>
+            <li v-for="(g,index) in hotGoods" :key="g.id">
+                {{index}} -- {{g.name}}
+            </li>
+        </ul>
+         <hr>
+         <ul>
+             <li v-for="(val,key,index) in person">
+                {{index}} -  {{key}}:{{val}} 
+             </li>
+         </ul>
+          <div>
+            <span v-for="n in 10">{{ n }} </span>
+          </div>
+    </div>
+</body>
+
+<script>
+    //   var app = new Vue({
+    //       el:"#app",
+    //       data:{
+    //         goods:[
+    //             {name:"香蕉",hot:"1",id:"cd001"},
+    //             {name:"橘子",hot:"0",id:"cd007"},
+    //             {name:"火龙果",hot:"0",id:"cd0018"}
+    //         ],
+    //         person:{
+    //               name:"wang",
+    //               age:21
+    //         }
+    //       },
+    //       computed: {
+    //           hotGoods(){
+    //               return this.goods.filter((item)=>{
+    //                    return item.hot == 0
+    //               })
+    //           }   
+    //       }
+    //   })
+
+    // var app = new Vue({
+    //       el:"#app",
+    //       data:{
+    //         goods:[
+    //             {name:"苹果",hot:"0",id:"cd001"},
+    //             {name:"橘子",hot:"1",id:"cd002"},
+    //             {name:"香蕉",hot:"0",id:"cd003"}
+    //         ],
+    //         person:{
+    //               name:"xiaownag",
+    //               age:22
+    //         }
+    //       },
+    //       computed: {
+
+    //           hotGoods(){
+    //               return this.goods.filter((item)=>{
+    //                    return item.hot == 0
+    //               })
+    //           }   
+    //       }
+    //   })
+
+
+    var app = new Vue({
+          el:"#app",
+          data:{
+            goods:[
+                {name:"香蕉",hot:"1",id:"cd001"},
+                {name:"橘子",hot:"0",id:"cd009"},
+                {name:"火龙果",hot:"0",id:"cd0008"}
+            ],
+            person:{
+                  name:"wang",
+                  age:21
+            }
+          },
+          computed: {
+              hotGoods(){
+                  return this.goods.filter((item)=>{
+                       return item.hot == 0
+                  })
+              }   
+          }
+      })
+</script>
+</html>
